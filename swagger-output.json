@@ -1,0 +1,35 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Simple Marketplace API",
+    "description": "Team 01 Final Project - CSE 341",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3300",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}

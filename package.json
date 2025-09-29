@@ -1,0 +1,52 @@
+{
+  "name": "cse341-team01-finalproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "swagger": "node swagger.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Velossoraptor/CSE341-Team01-FinalProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Velossoraptor/CSE341-Team01-FinalProject/issues"
+  },
+  "homepage": "https://github.com/Velossoraptor/CSE341-Team01-FinalProject#readme",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongodb": "^6.20.0",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "swagger-ui-express": "^5.0.1",
+    "validatorjs": "^3.22.1"
+  },
+  "devDependencies": {
+    "@eslint/json": "^0.13.2",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-code": "^0.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslit": "^6.0.0",
+    "globals": "^16.4.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "swagger-autogen": "^2.23.7"
+  }
+}
