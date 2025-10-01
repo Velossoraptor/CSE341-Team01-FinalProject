@@ -1,18 +1,20 @@
 const express = require('express');
-const app = express();
-const mongodb = require('./db/connect');
+require('dotenv').config();
+
+const mongoose = require('mongoose');
+
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3300;
+const app = express();
 
-app.use('/', require('./routes'));
+app.use(cors()).use(express.json()).use('/', require('./routes'));
 
-mongodb.initDb((err) =>{
-    if(err){
-        console.log(err);
-    }
-    else{
-        app.listen(PORT, ()=>{
-            console.log(`Server is running on port ${PORT}`);
-        });
-    }
-});
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(process.env.MONGODB_URI);
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
