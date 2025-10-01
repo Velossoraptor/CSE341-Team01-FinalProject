@@ -1,33 +1,17 @@
-const dotenv = require('dotenv'); 
-dotenv.config(); // Load environment variables from .env file
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-let db;
-
-const initDb = (callback) =>{
-    if(db){
-        console.log('Db is already initialized!');
-        return callback(null, db);
-    }
-    MongoClient.connect(process.env.MONGODB_URI)
-        .then((client) =>{
-            db = client;
-            callback(null, db);
-        })
-        .catch((err) =>{
-            callback(err);
-        });
-
+const connectDb = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Mongoose connected');
+  } catch (err) {
+    console.error('Mongoose connection error:', err.message);
+    throw err;
+  }
 };
 
-const getDb = () =>{
-    if(!db){
-        throw Error('Db has not been initialized');
-    }
-    return db;
-};
-
-module.exports = {
-    initDb,
-    getDb,
-};
+module.exports = { connectDb };

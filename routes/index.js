@@ -12,6 +12,9 @@ router.get('/', (req, res) => {
     res.send('Hello World! type /api-docs to see documentation')
 });
 
+delete swaggerDocument.paths["/auth/google"];
+delete swaggerDocument.paths["/auth/google/callback"];
+
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument, options));
 
