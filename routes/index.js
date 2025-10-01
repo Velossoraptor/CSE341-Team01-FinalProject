@@ -1,163 +1,3 @@
-/**
- * @swagger
- * /products/{id}:
- *   put:
- *     summary: Update a product
- *     description: Updates a product by ID. Requires admin or employee authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Product ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               price:
- *                 type: number
- *               description:
- *                 type: string
- *     responses:
- *       200:
- *         description: Product updated successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Product not found
- *
- * # TODO: Implement PUT /products/{id}
- */
-
-/**
- * @swagger
- * /stores/{id}:
- *   put:
- *     summary: Update a store
- *     description: Updates a store by ID. Requires admin or employee authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Store ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               location:
- *                 type: string
- *     responses:
- *       200:
- *         description: Store updated successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Store not found
- *
- * # TODO: Implement PUT /stores/{id}
- */
-
-/**
- * @swagger
- * /employees/{id}:
- *   put:
- *     summary: Update an employee
- *     description: Updates an employee by ID. Requires admin authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Employee ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               role:
- *                 type: string
- *     responses:
- *       200:
- *         description: Employee updated successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Employee not found
- *
- * # TODO: Implement PUT /employees/{id}
- */
-
-/**
- * @swagger
- * /users/{id}:
- *   put:
- *     summary: Update a user
- *     description: Updates a user by ID. Requires admin authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: User ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: User updated successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: User not found
- *
- * # TODO: Implement PUT /users/{id}
- */
-
 const express = require('express');
 const router = express.Router(); // Create a router instance
 const swaggerUi = require('swagger-ui-express');
@@ -486,6 +326,165 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  * # TODO: Implement GET and POST /users
  */
 
+/**
+ * @swagger
+ * /products/{id}:
+ *   put:
+ *     summary: Update a product
+ *     description: Updates a product by ID. Requires admin or employee authentication.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Product ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               description:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Product updated successfully
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden: insufficient privileges
+ *       404:
+ *         description: Product not found
+ *
+ * # TODO: Implement PUT /products/{id}
+ */
+
+/**
+ * @swagger
+ * /stores/{id}:
+ *   put:
+ *     summary: Update a store
+ *     description: Updates a store by ID. Requires admin or employee authentication.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Store ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               location:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Store updated successfully
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden: insufficient privileges
+ *       404:
+ *         description: Store not found
+ *
+ * # TODO: Implement PUT /stores/{id}
+ */
+
+/**
+ * @swagger
+ * /employees/{id}:
+ *   put:
+ *     summary: Update an employee
+ *     description: Updates an employee by ID. Requires admin authentication.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Employee ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Employee updated successfully
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden: insufficient privileges
+ *       404:
+ *         description: Employee not found
+ *
+ * # TODO: Implement PUT /employees/{id}
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Update a user
+ *     description: Updates a user by ID. Requires admin authentication.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden: insufficient privileges
+ *       404:
+ *         description: User not found
+ *
+ * # TODO: Implement PUT /users/{id}
+ */
 
 
 router.use('/api-docs', swaggerUi.serve);
