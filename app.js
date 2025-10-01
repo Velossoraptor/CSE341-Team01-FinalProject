@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const cookieParser = require('cookie-parser');
 const { connectDb } = require('./db/connect');
 const dotenv = require('dotenv');
@@ -20,9 +21,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 
+
 const PORT = process.env.PORT || 3300;
 
+// Middleware for JSON parsing
+app.use(express.json());
+
+// (Optional) Enable CORS if our frontend is separate
+// const cors = require('cors');
+// app.use(cors());
+
 app.use('/', require('./routes'));
+
 
 connectDb()
   .then(() => {
@@ -33,3 +43,4 @@ connectDb()
   .catch((err) => {
     console.error('❌ Failed to connect to MongoDB:', err.message);
   });
+
