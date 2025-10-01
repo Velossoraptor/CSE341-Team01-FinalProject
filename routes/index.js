@@ -29,6 +29,7 @@ router.get('/', (req, res) => {
 
 
 
+
 /**
  * @swagger
  * /products/{id}:
@@ -485,6 +486,10 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  *
  * # TODO: Implement PUT /users/{id}
  */
+
+
+delete swaggerDocument.paths["/auth/google"];
+delete swaggerDocument.paths["/auth/google/callback"];
 
 
 router.use('/api-docs', swaggerUi.serve);

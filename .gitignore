@@ -1,2 +1,26 @@
-node_modules
+# Dependency directory
+node_modules/
+
+# Environment variables
 .env
+
+# Package manager files
+package-lock.json
+
+# Build outputs
+/dist/
+/build/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+*.log
+
+# Git history files
+*.orig
+*.rej
