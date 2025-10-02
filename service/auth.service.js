@@ -7,6 +7,11 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 
 exports.getGoogleRedirect = (req, res) => {
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.summary = 'Get Google redirect URL'
+    #swagger.description = 'Redirects user to Google for OAuth2 authentication.'
+  */
   const url = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   url.search = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID,
@@ -22,6 +27,11 @@ exports.getGoogleRedirect = (req, res) => {
 };
 
 exports.handleGoogleCallback = async (req, res, next) => {
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.summary = 'Handle Google OAuth2 callback'
+    #swagger.description = 'Exchanges authorization code for tokens and verifies user identity with Google.'
+  */
   try {
     // 1. Grab authorization code from query
     const { code } = req.query;
@@ -73,6 +83,11 @@ exports.handleGoogleCallback = async (req, res, next) => {
 };
 
 exports.logout = asyncHandler(async (req, res) => {
+  /*
+    #swagger.tags = ['Authentication']
+    #swagger.summary = 'Logout user'
+    #swagger.description = 'Clears the authentication token cookie and session, logging the user out.'
+  */
   // Clear the same cookie you set on login
   res.clearCookie('token', {
     httpOnly: true,

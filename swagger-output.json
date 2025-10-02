@@ -546,25 +546,18 @@
           "Stores"
         ],
         "summary": "Get store by ID",
-        "description": "Retrieves a specific store by its ID.",
+        "description": "Returns a store by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Store ID"
+            "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -572,8 +565,8 @@
         "tags": [
           "Stores"
         ],
-        "summary": "Update a store",
-        "description": "Updates an existing store with the provided information.",
+        "summary": "Update an existing store",
+        "description": "Updates a store with the provided information.",
         "parameters": [
           {
             "name": "id",
@@ -585,7 +578,7 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Store object with updated fields",
+            "description": "Store object",
             "required": true,
             "schema": {
               "type": "object",
@@ -694,7 +687,11 @@
     },
     "/auth/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Google redirect URL",
+        "description": "Redirects user to Google for OAuth2 authentication.",
         "responses": {
           "default": {
             "description": ""
@@ -704,7 +701,11 @@
     },
     "/auth/google/callback": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Handle Google OAuth2 callback",
+        "description": "Exchanges authorization code for tokens and verifies user identity with Google.",
         "parameters": [
           {
             "name": "code",
@@ -721,7 +722,11 @@
     },
     "/auth/logout": {
       "post": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout user",
+        "description": "Clears the authentication token cookie and session, logging the user out.",
         "responses": {
           "200": {
             "description": "OK"
@@ -731,7 +736,11 @@
     },
     "/user/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users",
+        "description": "Returns a list of all active users.",
         "responses": {
           "200": {
             "description": "OK"
@@ -744,7 +753,11 @@
     },
     "/user/upgrade-role": {
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Upgrade user to admin",
+        "description": "Upgrades a regular user to admin role using a secret admin code.",
         "parameters": [
           {
             "name": "authorization",

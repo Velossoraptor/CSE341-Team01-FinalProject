@@ -2,6 +2,11 @@ const User = require('../models/user');
 const { getDb } = require('../db/connect');
 
 exports.Allusers = async (req, res) => {
+  /*
+    #swagger.tags = ['Users']
+    #swagger.summary = 'Get all users'
+    #swagger.description = 'Returns a list of all active users.'
+  */
   try {
     const users = await User.find();
     res.status(200).json({
@@ -14,6 +19,11 @@ exports.Allusers = async (req, res) => {
 };
 
 exports.upgradeToAdmin = async (req, res) => {
+  /*
+    #swagger.tags = ['Users']
+    #swagger.summary = 'Upgrade user to admin'
+    #swagger.description = 'Upgrades a regular user to admin role using a secret admin code.'
+  */
   const { adminCode } = req.body;
 
   if (!adminCode || adminCode !== process.env.ADMIN_CODE) {
