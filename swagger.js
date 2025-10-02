@@ -1,3 +1,6 @@
+swaggerAutogen(outputFile, endpointsFiles, doc);
+swaggerAutogen(outputFile, routes, doc);
+
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
@@ -6,6 +9,7 @@ const doc = {
     description: 'Team 01 Final Project - CSE 341',
   },
   host: process.env.HOST || 'localhost:3300',
+  schemes: ['http'],
   tags: [
     {
       name: 'Users',
@@ -27,19 +31,24 @@ const doc = {
       name: 'Authentication',
       description: 'Authentication and authorization endpoints'
     }
-  ]
+  ],
+  securityDefinitions: {
+    bearerAuth: {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT'
+    }
+  }
 };
- 
 
 const outputFile = './swagger-output.json';
 const endpointsFiles = [
-  './routes/index.js', './app.js'
+  './routes/index.js',
+  './routes/employees.js',
+  './routes/stores.js',
+  './app.js'
 ];
 
-/* NOTE: Including all route files to ensure Swagger picks up all endpoint documentation */
-
-
+// Only one call to swaggerAutogen is needed
 swaggerAutogen(outputFile, endpointsFiles, doc);
-
-swaggerAutogen(outputFile, routes, doc);
 
