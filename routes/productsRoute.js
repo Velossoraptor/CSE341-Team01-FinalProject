@@ -7,6 +7,7 @@ const {
   validateProductBody,
 } = require('../middleware/productValidation');
 const { authorizeAdminOrEmployee } = require('../middleware/auth');
+const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
 
 console.log(typeof productsController.updateProductById); // should be 'function'
 console.log(Array.isArray(validateProductId)); // should be true
@@ -22,6 +23,7 @@ router.get(
 
 router.post(
   '/',
+  verifyGoogleToken,
   authorizeAdminOrEmployee,
   validateProductBody,
   validationRequests,
@@ -30,6 +32,7 @@ router.post(
 
 router.put(
   '/:id',
+  verifyGoogleToken,
   authorizeAdminOrEmployee,
   [...validateProductId, ...validateProductBody],
   validationRequests,
@@ -38,6 +41,7 @@ router.put(
 
 router.delete(
   '/:id',
+  verifyGoogleToken,
   authorizeAdminOrEmployee,
   validateProductId,
   validationRequests,
