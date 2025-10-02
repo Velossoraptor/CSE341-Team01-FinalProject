@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router(); // Create a router instance
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger-output.json');
-const { authenticate, authorizeAdminOrEmployee } = require('../middleware/auth');
+const { authorizeAdminOrEmployee } = require('../middleware/auth');
+const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
 const Product = require('../models/product');
 const User = require('../models/user');
 
@@ -58,7 +59,7 @@ router.use('/stores', storesRoutes);
  *       404:
  *         description: Product not found
  */
-router.delete('/products/:id', authenticate, authorizeAdminOrEmployee, async (req, res) => {
+router.delete('/products/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found.' });
@@ -94,7 +95,7 @@ router.delete('/products/:id', authenticate, authorizeAdminOrEmployee, async (re
  *       404:
  *         description: User not found
  */
-router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, res) => {
+router.delete('/users/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found.' });

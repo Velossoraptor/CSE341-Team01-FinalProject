@@ -16,3 +16,12 @@ I will create and maintain the Swagger (OpenAPI) documentation for every API end
 * This will make it easy for teammates, testers, and future developers to explore and understand how to use our Simple Marketplace API.
 
 I hope it all makes sense.
+
+
+Happiness part2
+
+Team, I’ve updated the protected routes to use the new Google OAuth authentication middleware (verifyGoogleToken) instead of the old authenticate middleware.
+
+Originally, I used the authenticate middleware because our project was set up for custom JWT authentication. Now that we’ve switched to Google OAuth, I’ve replaced all uses of authenticate with verifyGoogleToken to match our new authentication flow. The authorizeAdminOrEmployee middleware is still used for role-based access.
+
+This make sure that our routes are consistent with the team’s agreed approach and that only users with valid Google tokens and the right roles can access protected endpoints.
