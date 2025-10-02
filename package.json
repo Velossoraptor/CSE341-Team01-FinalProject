@@ -38,6 +38,8 @@
 
     "google-auth-library": "^10.3.1",
 
+    "jsonwebtoken": "^9.0.2",
+
     "mongodb": "^6.20.0",
     "mongoose": "^8.18.3",
     "passport": "^0.7.0",

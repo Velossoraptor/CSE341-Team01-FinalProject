@@ -6,12 +6,40 @@ const doc = {
     description: 'Team 01 Final Project - CSE 341',
   },
   host: process.env.HOST || 'localhost:3300',
+  tags: [
+    {
+      name: 'Users',
+      description: 'User management endpoints'
+    },
+    {
+      name: 'Employees',
+      description: 'Employee management endpoints'
+    },
+    {
+      name: 'Stores',
+      description: 'Store management endpoints'
+    },
+    {
+      name: 'Products',
+      description: 'Product management endpoints'
+    },
+    {
+      name: 'Authentication',
+      description: 'Authentication and authorization endpoints'
+    }
+  ]
 };
+ 
 
 const outputFile = './swagger-output.json';
-const routes = ['./app.js'];
+const endpointsFiles = [
+  './routes/index.js', './app.js'
+];
 
-/* NOTE: If you are using the express Router, you must pass in the 'routes' only the 
-root file where the route starts, such as index.js, app.js, routes.js, etc ... */
+/* NOTE: Including all route files to ensure Swagger picks up all endpoint documentation */
+
+
+swaggerAutogen(outputFile, endpointsFiles, doc);
 
 swaggerAutogen(outputFile, routes, doc);
+
