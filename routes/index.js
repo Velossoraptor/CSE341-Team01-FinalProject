@@ -4,9 +4,11 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger-output.json');
 const { authenticate, authorizeAdminOrEmployee } = require('../middleware/auth');
 const Product = require('../models/product');
-const Store = require('../models/store');
-const Employee = require('../models/employee');
 const User = require('../models/user');
+
+// Route imports
+const employeesRoutes = require('./employees');
+const storesRoutes = require('./stores');
 
 /**
  * @swagger
@@ -27,8 +29,9 @@ router.get('/', (req, res) => {
     res.send('Hello World! type /api-docs to see documentation')
 });
 
-
-
+// Use route modules
+router.use('/employees', employeesRoutes);
+router.use('/stores', storesRoutes);
 
 /**
  * @swagger
@@ -62,78 +65,6 @@ router.delete('/products/:id', authenticate, authorizeAdminOrEmployee, async (re
     res.json({ message: 'Product deleted successfully.' });
   } catch (err) {
     res.status(500).json({ message: 'Error deleting product.' });
-  }
-});
-
-
-/**
- * @swagger
- * /stores/{id}:
- *   delete:
- *     summary: Delete a store
- *     description: Deletes a store by ID. Requires admin or employee authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Store ID
- *     responses:
- *       200:
- *         description: Store deleted successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Store not found
- */
-router.delete('/stores/:id', authenticate, authorizeAdminOrEmployee, async (req, res) => {
-  try {
-    const store = await Store.findByIdAndDelete(req.params.id);
-    if (!store) return res.status(404).json({ message: 'Store not found.' });
-    res.json({ message: 'Store deleted successfully.' });
-  } catch (err) {
-    res.status(500).json({ message: 'Error deleting store.' });
-  }
-});
-
-
-/**
- * @swagger
- * /employees/{id}:
- *   delete:
- *     summary: Delete an employee
- *     description: Deletes an employee by ID. Requires admin or employee authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Employee ID
- *     responses:
- *       200:
- *         description: Employee deleted successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Employee not found
- */
-router.delete('/employees/:id', authenticate, authorizeAdminOrEmployee, async (req, res) => {
-  try {
-    const employee = await Employee.findByIdAndDelete(req.params.id);
-    if (!employee) return res.status(404).json({ message: 'Employee not found.' });
-    res.json({ message: 'Employee deleted successfully.' });
-  } catch (err) {
-    res.status(500).json({ message: 'Error deleting employee.' });
   }
 });
 
@@ -177,12 +108,14 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  * @swagger
  * /products:
  *   get:
+ *     tags: [Products]
  *     summary: Get all products
  *     description: Returns a list of all products.
  *     responses:
  *       200:
  *         description: Success
  *   post:
+ *     tags: [Products]
  *     summary: Create a new product
  *     description: Creates a new product. Requires admin or employee authentication.
  *     security:
@@ -211,82 +144,15 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  * # TODO: Implement GET and POST /products
  */
 
-/**
- * @swagger
- * /stores:
- *   get:
- *     summary: Get all stores
- *     description: Returns a list of all stores.
- *     responses:
- *       200:
- *         description: Success
- *   post:
- *     summary: Create a new store
- *     description: Creates a new store. Requires admin or employee authentication.
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               location:
- *                 type: string
- *     responses:
- *       201:
- *         description: Store created
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *
- * # TODO: Implement GET and POST /stores
- */
 
-/**
- * @swagger
- * /employees:
- *   get:
- *     summary: Get all employees
- *     description: Returns a list of all employees.
- *     responses:
- *       200:
- *         description: Success
- *   post:
- *     summary: Create a new employee
- *     description: Creates a new employee. Requires admin authentication.
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               role:
- *                 type: string
- *     responses:
- *       201:
- *         description: Employee created
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *
- * # TODO: Implement GET and POST /employees
- */
+
+
 
 /**
  * @swagger
  * /users:
  *   get:
+ *     tags: [Users]
  *     summary: Get all users
  *     description: Returns a list of all users. Requires admin authentication.
  *     security:
@@ -299,6 +165,7 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  *       403:
  *         description: Forbidden: insufficient privileges
  *   post:
+ *     tags: [Users]
  *     summary: Create a new user
  *     description: Creates a new user. Requires admin authentication.
  *     security:
@@ -331,6 +198,7 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  * @swagger
  * /products/{id}:
  *   put:
+ *     tags: [Products]
  *     summary: Update a product
  *     description: Updates a product by ID. Requires admin or employee authentication.
  *     security:
@@ -404,13 +272,13 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  *       404:
  *         description: Store not found
  *
- * # TODO: Implement PUT /stores/{id}
  */
 
 /**
  * @swagger
  * /employees/{id}:
  *   put:
+ *     tags: [Employees]
  *     summary: Update an employee
  *     description: Updates an employee by ID. Requires admin authentication.
  *     security:
@@ -443,13 +311,13 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  *       404:
  *         description: Employee not found
  *
- * # TODO: Implement PUT /employees/{id}
  */
 
 /**
  * @swagger
  * /users/{id}:
  *   put:
+ *     tags: [Users]
  *     summary: Update a user
  *     description: Updates a user by ID. Requires admin authentication.
  *     security:
