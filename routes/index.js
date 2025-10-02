@@ -6,7 +6,7 @@ const swaggerDocument = require('../swagger-output.json');
 const { authorizeAdminOrEmployee } = require('../middleware/auth');
 const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
 
-const { authenticate, authorizeAdminOrEmployee } = require('../middleware/auth');
+const { authenticate } = require('../middleware/auth');
 
 const Product = require('../models/product');
 const User = require('../models/user');
@@ -26,16 +26,12 @@ const storesRoutes = require('./stores');
  *         description: Success
  */
 
-
 var options = {
   customCss: '.swagger-ui .topbar { display: none }',
 };
 
 router.get('/', (req, res) => {
-
- 
-    res.send('Hello World! type /api-docs to see documentation')
-
+  res.send('Hello World! type /api-docs to see documentation');
 });
 
 // Use route modules
@@ -67,16 +63,21 @@ router.use('/stores', storesRoutes);
  *       404:
  *         description: Product not found
  */
-router.delete('/products/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
-  try {
-    const product = await Product.findByIdAndDelete(req.params.id);
-    if (!product) return res.status(404).json({ message: 'Product not found.' });
-    res.json({ message: 'Product deleted successfully.' });
-  } catch (err) {
-    res.status(500).json({ message: 'Error deleting product.' });
+router.delete(
+  '/products/:id',
+  verifyGoogleToken,
+  authorizeAdminOrEmployee,
+  async (req, res) => {
+    try {
+      const product = await Product.findByIdAndDelete(req.params.id);
+      if (!product)
+        return res.status(404).json({ message: 'Product not found.' });
+      res.json({ message: 'Product deleted successfully.' });
+    } catch (err) {
+      res.status(500).json({ message: 'Error deleting product.' });
+    }
   }
-});
-
+);
 
 /**
  * @swagger
@@ -103,15 +104,20 @@ router.delete('/products/:id', verifyGoogleToken, authorizeAdminOrEmployee, asyn
  *       404:
  *         description: User not found
  */
-router.delete('/users/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found.' });
-    res.json({ message: 'User deleted successfully.' });
-  } catch (err) {
-    res.status(500).json({ message: 'Error deleting user.' });
+router.delete(
+  '/users/:id',
+  verifyGoogleToken,
+  authorizeAdminOrEmployee,
+  async (req, res) => {
+    try {
+      const user = await User.findByIdAndDelete(req.params.id);
+      if (!user) return res.status(404).json({ message: 'User not found.' });
+      res.json({ message: 'User deleted successfully.' });
+    } catch (err) {
+      res.status(500).json({ message: 'Error deleting user.' });
+    }
   }
-});
+);
 
 /**
  * @swagger
@@ -152,10 +158,6 @@ router.delete('/users/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (
  *
  * # TODO: Implement GET and POST /products
  */
-
-
-
-
 
 /**
  * @swagger
@@ -292,24 +294,17 @@ router.delete('/users/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (
  * # TODO: Implement PUT /users/{id}
  */
 
-
-delete swaggerDocument.paths["/auth/google"];
-delete swaggerDocument.paths["/auth/google/callback"];
-
+delete swaggerDocument.paths['/auth/google'];
+delete swaggerDocument.paths['/auth/google/callback'];
 
 router.use('/api-docs', swaggerUi.serve);
-router.use('/products', productsRoute);
 
 router.get('/api-docs', swaggerUi.setup(swaggerDocument, options));
 
 module.exports = router;
-
 
 // I've created middleware
 // Created auth.js
 //The authenticate and authorizeAdminOrEmployee middleware have been created in auth.js.
 //authenticate checks for a valid JWT token in the Authorization header.
 //authorizeAdminOrEmployee ensures the user has either the admin or employee role.
-
-
-

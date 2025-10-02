@@ -1,137 +1,260 @@
 const Product = require('../models/ProductsModel');
 
-const products = {};
+const productsController = {};
 
-// Get all products
-products.getAllProducts = async (req, res) => {
+productsController.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
 
     if (products.length === 0) {
-      return res.status(404).json({ message: 'No products found' });
+      return res.status(404).json({
+        method: req.method,
+        path: req.originalUrl,
+        message: 'No products found',
+      });
     }
 
-    res
-      .status(200)
-      .json({ message: 'Products retrieved successfully', data: products });
+    res.status(200).json({
+      method: req.method,
+      path: req.originalUrl,
+      message: 'Products retrieved successfully',
+      data: products,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      method: req.method,
+      path: req.originalUrl,
+      error: 'Server error',
+      message: error.message,
+    });
   }
 };
 
-// Get a product by ID
-products.getProductById = async (req, res) => {
-  const productId = req.params.id;
+productsController.getProductById = async (req, res) => {
+  const { id: productId } = req.params;
 
   try {
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({
+        method: req.method,
+        path: req.originalUrl,
+        param: productId,
+        message: 'Product not found',
+      });
     }
 
-    res
-      .status(200)
-      .json({ message: 'Product retrieved successfully', data: product });
+    res.status(200).json({
+      method: req.method,
+      path: req.originalUrl,
+      param: productId,
+      message: 'Product retrieved successfully',
+      data: product,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      method: req.method,
+      path: req.originalUrl,
+      param: productId,
+      error: 'Server error',
+      message: error.message,
+    });
   }
 };
 
-// Post new product with duplicate name check
-products.createNewProduct = async (req, res) => {
-  try {
-    const existingProduct = await Product.findOne({ name: req.body.name });
+productsController.createNewProduct = async (req, res) => {
+  const {
+    name,
+    price,
+    description,
+    inStock,
+    category,
+    tag,
+    brand,
+    accountType,
+  } = req.body;
 
-    // If product with the same name exists, return a 409 Conflict response
+  try {
+    const existingProduct = await Product.findOne({ name });
+
     if (existingProduct) {
-      return res
-        .status(409)
-        .json({ message: 'Product with this name already exists' });
+      return res.status(409).json({
+        method: req.method,
+        path: req.originalUrl,
+        body: req.body,
+        message: 'Product with this name already exists',
+      });
     }
 
-    // If no duplicate, proceed to create the new product
     const newProduct = new Product({
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      inStock: req.body.inStock,
-      category: req.body.category,
-      tag: req.body.tag,
-      brand: req.body.brand,
-      accountType: req.body.accountType,
+      name,
+      price,
+      description,
+      inStock,
+      category,
+      tag,
+      brand,
+      accountType,
     });
 
     const result = await newProduct.save();
 
     if (!result) {
-      return res
-        .status(400)
-        .json({ message: 'Product was not created successfully' });
+      return res.status(400).json({
+        method: req.method,
+        path: req.originalUrl,
+        body: req.body,
+        message: 'Product was not created successfully',
+      });
     }
-    res
-      .status(201)
-      .json({ message: 'Product created successfully', data: result });
+
+    res.status(201).json({
+      method: req.method,
+      path: req.originalUrl,
+      body: req.body,
+      message: 'Product created successfully',
+      data: result,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      method: req.method,
+      path: req.originalUrl,
+      body: req.body,
+      error: 'Server error',
+      message: error.message,
+    });
   }
 };
 
-// Update product by ID function with validation
-products.updateProductById = async (req, res) => {
-  const productId = req.params.id;
+productsController.updateProductById = async (req, res) => {
+  const { id: productId } = req.params;
+  const {
+    name,
+    price,
+    description,
+    inStock,
+    category,
+    tag,
+    brand,
+    accountType,
+    createdBy,
+  } = req.body;
 
   try {
-    if (!productId) {
-      return res.status(400).json({ message: 'Product ID is required' });
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({
+        method: req.method,
+        path: req.originalUrl,
+        param: productId,
+        message: 'Product not found',
+      });
     }
-    // Check if name being updated already exists
-    if (req.body.name) {
+
+    if (product.createdBy !== req.user?.email) {
+      return res.status(403).json({
+        method: req.method,
+        path: req.originalUrl,
+        param: productId,
+        message: 'Forbidden: not your product',
+      });
+    }
+
+    const updates = {
+      ...(name !== undefined && { name }),
+      ...(price !== undefined && { price }),
+      ...(description !== undefined && { description }),
+      ...(inStock !== undefined && { inStock }),
+      ...(category !== undefined && { category }),
+      ...(tag !== undefined && { tag }),
+      ...(brand !== undefined && { brand }),
+      ...(accountType !== undefined && { accountType }),
+      updatedAt: Date.now(),
+    };
+
+    if (name) {
       const existingProduct = await Product.findOne({
-        name: req.body.name,
-        _id: { $ne: req.params.id },
+        name,
+        _id: { $ne: productId },
       });
 
       if (existingProduct) {
         return res.status(409).json({
-          error: 'Product already exists',
-          message: 'A product with this name already exists in the store',
+          method: req.method,
+          path: req.originalUrl,
+          param: productId,
+          body: req.body,
+          error: 'Duplicate name',
+          message: 'A product with this name already exists',
         });
       }
     }
 
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedProduct = await Product.findByIdAndUpdate(productId, updates, {
       new: true,
       runValidators: true,
     });
 
-    //  Check for truthy
-    if (!product) {
-      return res.status(404).json({
-        error: 'Product not found',
-        message: 'No product found with the provided ID',
-      });
-    }
-
-    //  Update the record
     res.status(200).json({
-      success: true,
+      method: req.method,
+      path: req.originalUrl,
+      param: productId,
+      body: req.body,
       message: 'Product updated successfully',
-      data: product,
+      data: updatedProduct,
     });
   } catch (error) {
-    console.error('Error updating product:', error);
-    if (error.code === 11000) {
-      res.status(409).json({
-        error: 'Duplicate entry',
-        message: 'A product with this name already exists',
-      });
-    } else {
-      res.status(500).json({
-        error: 'Failed to update product',
-        message: 'An error occurred while updating the product',
-      });
-    }
+    res.status(500).json({
+      method: req.method,
+      path: req.originalUrl,
+      param: productId,
+      body: req.body,
+      error: 'Server error',
+      message: error.message,
+    });
   }
 };
 
-module.exports = products;
+productsController.deleteProductById = async (req, res) => {
+  const { id: productId } = req.params;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({
+        method: req.method,
+        path: req.originalUrl,
+        param: productId,
+        message: 'Product not found',
+      });
+    }
+
+    if (product.createdBy !== req.user?.email) {
+      return res.status(403).json({
+        method: req.method,
+        path: req.originalUrl,
+        param: productId,
+        message: 'Forbidden: not your product',
+      });
+    }
+
+    await Product.findByIdAndDelete(productId);
+
+    res.status(200).json({
+      method: req.method,
+      path: req.originalUrl,
+      param: productId,
+      message: 'Product deleted successfully',
+    });
+  } catch (error) {
+    res.status(500).json({
+      method: req.method,
+      path: req.originalUrl,
+      param: productId,
+      error: 'Server error',
+      message: error.message,
+    });
+  }
+};
+
+module.exports = productsController;
