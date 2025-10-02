@@ -150,48 +150,90 @@
             "name": "body",
             "in": "body",
             "description": "Employee object to create",
-            "required": true,
+            "required": [
+              "employeeId",
+              "firstName",
+              "lastName",
+              "email",
+              "phone",
+              "position",
+              "department",
+              "storeId",
+              "salary",
+              "hireDate"
+            ],
             "schema": {
               "type": "object",
               "properties": {
-                "type": {
+                "employeeId": {
                   "type": "string",
-                  "example": "object"
+                  "example": "string"
                 },
-                "required": {
-                  "type": "array",
-                  "example": [
-                    "employeeId",
-                    "firstName",
-                    "lastName",
-                    "email",
-                    "phone",
-                    "position",
-                    "department",
-                    "storeId",
-                    "salary",
-                    "hireDate"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
+                "firstName": {
+                  "type": "string",
+                  "example": "string"
                 },
-                "properties": {
+                "lastName": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "position": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "department": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "storeId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "salary": {
+                  "type": "number",
+                  "example": 65000
+                },
+                "hireDate": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
                   "type": "object",
                   "properties": {
-                    "employeeId": {
+                    "street": {
                       "type": "string",
                       "example": "string"
                     },
-                    "firstName": {
+                    "city": {
                       "type": "string",
                       "example": "string"
                     },
-                    "lastName": {
+                    "state": {
                       "type": "string",
                       "example": "string"
                     },
-                    "email": {
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "emergencyContact": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
                       "type": "string",
                       "example": "string"
                     },
@@ -199,33 +241,9 @@
                       "type": "string",
                       "example": "string"
                     },
-                    "position": {
+                    "relationship": {
                       "type": "string",
                       "example": "string"
-                    },
-                    "department": {
-                      "type": "string",
-                      "example": "string"
-                    },
-                    "storeId": {
-                      "type": "string",
-                      "example": "string"
-                    },
-                    "salary": {
-                      "type": "string",
-                      "example": "number"
-                    },
-                    "hireDate": {
-                      "type": "string",
-                      "example": "string"
-                    },
-                    "address": {
-                      "type": "string",
-                      "example": "object"
-                    },
-                    "emergencyContact": {
-                      "type": "string",
-                      "example": "object"
                     }
                   }
                 }
@@ -293,26 +311,75 @@
             "schema": {
               "type": "object",
               "properties": {
-                "type": {
+                "employeeId": {
                   "type": "string",
-                  "example": "object"
+                  "example": "string"
                 },
-                "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "position": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "department": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "storeId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "salary": {
+                  "type": "number",
+                  "example": 65000
+                },
+                "hireDate": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
                   "type": "object",
                   "properties": {
-                    "employeeId": {
+                    "street": {
                       "type": "string",
                       "example": "string"
                     },
-                    "firstName": {
+                    "city": {
                       "type": "string",
                       "example": "string"
                     },
-                    "lastName": {
+                    "state": {
                       "type": "string",
                       "example": "string"
                     },
-                    "email": {
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "emergencyContact": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
                       "type": "string",
                       "example": "string"
                     },
@@ -320,33 +387,9 @@
                       "type": "string",
                       "example": "string"
                     },
-                    "position": {
+                    "relationship": {
                       "type": "string",
                       "example": "string"
-                    },
-                    "department": {
-                      "type": "string",
-                      "example": "string"
-                    },
-                    "storeId": {
-                      "type": "string",
-                      "example": "string"
-                    },
-                    "salary": {
-                      "type": "string",
-                      "example": "number"
-                    },
-                    "hireDate": {
-                      "type": "string",
-                      "example": "string"
-                    },
-                    "address": {
-                      "type": "string",
-                      "example": "object"
-                    },
-                    "emergencyContact": {
-                      "type": "string",
-                      "example": "object"
                     }
                   }
                 }
@@ -425,10 +468,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
                 "properties": {
                   "type": "object",
                   "properties": {
@@ -441,8 +480,29 @@
                       "example": "string"
                     },
                     "address": {
-                      "type": "string",
-                      "example": "object"
+                      "type": "object",
+                      "properties": {
+                        "street": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "country": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
                     "phone": {
                       "type": "string",
@@ -530,10 +590,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "object"
-                },
                 "properties": {
                   "type": "object",
                   "properties": {
@@ -546,8 +602,29 @@
                       "example": "string"
                     },
                     "address": {
-                      "type": "string",
-                      "example": "object"
+                      "type": "object",
+                      "properties": {
+                        "street": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "country": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
                     "phone": {
                       "type": "string",

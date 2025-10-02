@@ -81,4 +81,19 @@ employeeSchema.pre('save', function(next) {
   next();
 });
 
+// Remove __v from serialized outputs
+employeeSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  }
+});
+
+employeeSchema.set('toObject', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  }
+});
+
 module.exports = mongoose.model('Employee', employeeSchema, 'employees');

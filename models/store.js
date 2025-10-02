@@ -90,4 +90,21 @@ storeSchema.pre('save', function(next) {
   next();
 });
 
+// Hide version fields in serialized output
+storeSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    delete ret._v;
+    return ret;
+  }
+});
+
+storeSchema.set('toObject', {
+  transform: (doc, ret) => {
+    delete ret.__v;
+    delete ret._v;
+    return ret;
+  }
+});
+
 module.exports = mongoose.model('Store', storeSchema, 'stores');

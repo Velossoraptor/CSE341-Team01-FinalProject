@@ -237,81 +237,9 @@ router.delete('/users/:id', authenticate, authorizeAdminOrEmployee, async (req, 
  */
 
 /**
- * @swagger
- * /stores/{id}:
- *   put:
- *     summary: Update a store
- *     description: Updates a store by ID. Requires admin or employee authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Store ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               location:
- *                 type: string
- *     responses:
- *       200:
- *         description: Store updated successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Store not found
- *
- */
 
-/**
- * @swagger
- * /employees/{id}:
- *   put:
- *     tags: [Employees]
- *     summary: Update an employee
- *     description: Updates an employee by ID. Requires admin authentication.
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Employee ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               role:
- *                 type: string
- *     responses:
- *       200:
- *         description: Employee updated successfully
- *       401:
- *         description: Authentication required
- *       403:
- *         description: Forbidden: insufficient privileges
- *       404:
- *         description: Employee not found
- *
- */
+
+
 
 /**
  * @swagger

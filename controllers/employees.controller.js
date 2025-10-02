@@ -15,7 +15,12 @@ const getAllEmployees = async (req, res) => {
   */
   try {
     const employees = await Employee.find({ isActive: true }).populate('storeId', 'name location');
-    res.json(employees);
+    const ordered = employees.map((e) => {
+      const obj = e.toObject();
+      const { _id, ...rest } = obj;
+      return { _id, ...rest };
+    });
+    res.json(ordered);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching employees.', error: err.message });
   }
@@ -37,7 +42,9 @@ const getEmployeeById = async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id).populate('storeId', 'name location');
     if (!employee) return res.status(404).json({ message: 'Employee not found.' });
-    res.json(employee);
+    const obj = employee.toObject();
+    const { _id, ...rest } = obj;
+    res.json({ _id, ...rest });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching employee.', error: err.message });
   }
@@ -52,23 +59,29 @@ const createEmployee = async (req, res) => {
     #swagger.parameters['body'] = {
       in: 'body',
       description: 'Employee object to create',
-      required: true,
+      required: ['employeeId', 'firstName', 'lastName', 'email', 'phone', 'position', 'department', 'storeId', 'salary', 'hireDate'],
       schema: {
-        type: 'object',
-        required: ['employeeId', 'firstName', 'lastName', 'email', 'phone', 'position', 'department', 'storeId', 'salary', 'hireDate'],
-        properties: {
-          employeeId: 'string',
-          firstName: 'string',
-          lastName: 'string',
-          email: 'string',
+        employeeId: 'string',
+        firstName: 'string',
+        lastName: 'string',
+        email: 'string',
+        phone: 'string',
+        position: 'string',
+        department: 'string',
+        storeId: 'string',
+        salary: 65000,
+        hireDate: 'string',
+        address: {
+          street: 'string',
+          city: 'string',
+          state: 'string',
+          zipCode: 'string',
+          country: 'string'
+        },
+        emergencyContact: {
+          name: 'string',
           phone: 'string',
-          position: 'string',
-          department: 'string',
-          storeId: 'string',
-          salary: 'number',
-          hireDate: 'string',
-          address: 'object',
-          emergencyContact: 'object'
+          relationship: 'string'
         }
       }
     }
@@ -102,20 +115,27 @@ const updateEmployee = async (req, res) => {
       description: 'Employee object with updated fields',
       required: true,
       schema: {
-        type: 'object',
-        properties: {
-          employeeId: 'string',
-          firstName: 'string',
-          lastName: 'string',
-          email: 'string',
+        employeeId: 'string',
+        firstName: 'string',
+        lastName: 'string',
+        email: 'string',
+        phone: 'string',
+        position: 'string',
+        department: 'string',
+        storeId: 'string',
+        salary: 65000,
+        hireDate: 'string',
+        address: {
+          street: 'string',
+          city: 'string',
+          state: 'string',
+          zipCode: 'string',
+          country: 'string'
+        },
+        emergencyContact: {
+          name: 'string',
           phone: 'string',
-          position: 'string',
-          department: 'string',
-          storeId: 'string',
-          salary: 'number',
-          hireDate: 'string',
-          address: 'object',
-          emergencyContact: 'object'
+          relationship: 'string'
         }
       }
     }
