@@ -3,6 +3,8 @@ const Store = require('../models/store');
 // GET all stores
 const getAllStores = async (req, res) => {
   /*
+    #swagger.tags = ['Stores']
+    #swagger.summary = 'Get all stores'
     #swagger.description = 'Returns a list of all active stores.'
   */
   try {
@@ -21,7 +23,9 @@ const getAllStores = async (req, res) => {
 // GET store by ID
 const getStoreById = async (req, res) => {
   /*
-      type: 'string'
+   #swagger.tags = ['Stores']
+   #swagger.summary = 'Get store by ID'
+   #swagger.description = 'Returns a store by its ID.'
     }
   */
   try {
