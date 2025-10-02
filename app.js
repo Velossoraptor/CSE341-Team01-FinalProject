@@ -8,6 +8,9 @@ const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const productRoutes = require('./routes/productsRoute');
+const employeesRoute = require('./routes/employees');
+const storesRoute = require('./routes/stores');
 
 dotenv.config();
 
@@ -20,12 +23,11 @@ app.use(express.urlencoded({ extended: true }));
 //Routes Mount
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
-
+app.use('/products', productRoutes);
+app.use('/employees', employeesRoute);
+app.use('/stores', storesRoute);
 
 const PORT = process.env.PORT || 3300;
-
-
-
 
 // Middleware for JSON parsing
 app.use(express.json());
@@ -36,7 +38,6 @@ app.use(express.json());
 
 app.use('/', require('./routes'));
 
-
 connectDb()
   .then(() => {
     app.listen(PORT, () => {
@@ -46,5 +47,3 @@ connectDb()
   .catch((err) => {
     console.error('❌ Failed to connect to MongoDB:', err.message);
   });
-
-

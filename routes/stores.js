@@ -2,15 +2,30 @@ const express = require('express');
 const router = express.Router();
 
 const storesController = require('../controllers/stores.controller');
-const { authenticate, authorizeAdminOrEmployee } = require('../middleware/auth');
+const { authorizeAdminOrEmployee } = require('../middleware/auth');
 
+const { verifyGoogleToken } = require('../middleware/VerifyGoogleToken');
 
 router.get('/', storesController.getAllStores);
-router.post('/'/*, authenticate, authorizeAdminOrEmployee*/, storesController.createStore);
-
+router.post(
+  '/',
+  verifyGoogleToken,
+  authorizeAdminOrEmployee,
+  storesController.createStore
+);
 
 router.get('/:id', storesController.getStoreById);
-router.put('/:id'/*, authenticate, authorizeAdminOrEmployee*/, storesController.updateStore);
-router.delete('/:id'/*, authenticate, authorizeAdminOrEmployee*/, storesController.deleteStore);
+router.put(
+  '/:id',
+  verifyGoogleToken,
+  authorizeAdminOrEmployee,
+  storesController.updateStore
+);
+router.delete(
+  '/:id',
+  verifyGoogleToken,
+  authorizeAdminOrEmployee,
+  storesController.deleteStore
+);
 
 module.exports = router;
