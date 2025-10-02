@@ -24,11 +24,20 @@
   },
   "homepage": "https://github.com/Velossoraptor/CSE341-Team01-FinalProject#readme",
   "dependencies": {
+
+    "axios": "^1.12.2",
+    "cookie-parser": "^1.4.7",
+
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
     "express-session": "^1.18.2",
+
     "express-validator": "^7.2.1",
+
+    "google-auth-library": "^10.3.1",
+
     "mongodb": "^6.20.0",
     "mongoose": "^8.18.3",
     "passport": "^0.7.0",
