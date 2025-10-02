@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router(); // Create a router instance
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger-output.json');
+
 const { authenticate, authorizeAdminOrEmployee } = require('../middleware/auth');
 const Product = require('../models/product');
 const Store = require('../models/store');
@@ -19,12 +20,16 @@ const User = require('../models/user');
  *         description: Success
  */
 
+
 var options = {
   customCss: '.swagger-ui .topbar { display: none }',
 };
 
 router.get('/', (req, res) => {
+
+ 
     res.send('Hello World! type /api-docs to see documentation')
+
 });
 
 
@@ -493,6 +498,8 @@ delete swaggerDocument.paths["/auth/google/callback"];
 
 
 router.use('/api-docs', swaggerUi.serve);
+router.use('/products', productsRoute);
+
 router.get('/api-docs', swaggerUi.setup(swaggerDocument, options));
 
 module.exports = router;
@@ -503,5 +510,6 @@ module.exports = router;
 //The authenticate and authorizeAdminOrEmployee middleware have been created in auth.js.
 //authenticate checks for a valid JWT token in the Authorization header.
 //authorizeAdminOrEmployee ensures the user has either the admin or employee role.
+
 
 
