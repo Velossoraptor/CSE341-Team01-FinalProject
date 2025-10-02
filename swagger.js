@@ -3,7 +3,7 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
   info: {
     title: 'Simple Marketplace API',
-    description: 'Team 01 Final Project - CSE 341'
+    description: 'Team 01 Final Project - CSE 341',
   },
   host: process.env.HOST || 'localhost:3300',
   tags: [
@@ -38,4 +38,8 @@ const endpointsFiles = [
 
 /* NOTE: Including all route files to ensure Swagger picks up all endpoint documentation */
 
+
 swaggerAutogen(outputFile, endpointsFiles, doc);
+
+swaggerAutogen(outputFile, routes, doc);
+

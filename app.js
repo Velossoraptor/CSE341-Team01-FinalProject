@@ -24,6 +24,9 @@ app.use('/user', userRoutes);
 
 const PORT = process.env.PORT || 3300;
 
+
+
+
 // Middleware for JSON parsing
 app.use(express.json());
 
@@ -43,4 +46,5 @@ connectDb()
   .catch((err) => {
     console.error('❌ Failed to connect to MongoDB:', err.message);
   });
+
 
