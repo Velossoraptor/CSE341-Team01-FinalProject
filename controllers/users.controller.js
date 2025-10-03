@@ -50,7 +50,7 @@ exports.upgradeToAdmin = async (req, res) => {
       return res.status(400).json({ message: 'User is already an admin' });
     }
 
-    user.roles.push('admin');
+    user.roles = ['admin'];
     await user.save();
 
     res
