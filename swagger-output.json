@@ -810,7 +810,15 @@
     },
     "/stores/{id}": {
       "get": {
+
         "description": "",
+
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get store by ID",
+        "description": "Returns a store by its ID.",
+
         "parameters": [
           {
             "name": "id",
@@ -820,14 +828,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -979,7 +981,11 @@
     },
     "/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Google redirect URL",
+        "description": "Redirects user to Google for OAuth2 authentication.",
         "responses": {
           "200": {
             "description": "OK"
@@ -1058,7 +1064,11 @@
     },
     "/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Handle Google OAuth2 callback",
+        "description": "Exchanges authorization code for tokens and verifies user identity with Google.",
         "parameters": [
           {
             "name": "id",
@@ -1081,58 +1091,15 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "inStock": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "tag": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "accountType": {
-                  "example": "any"
-                },
-                "createdBy": {
-                  "example": "any"
-                }
-              }
-            }
-          }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
         ],
+        "summary": "Logout user",
+        "description": "Clears the authentication token cookie and session, logging the user out.",
         "responses": {
           "200": {
             "description": "OK"
@@ -1156,22 +1123,15 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": [
+          "Users"
         ],
+        "summary": "Get all users",
+        "description": "Returns a list of all active users.",
         "responses": {
           "200": {
             "description": "OK"
@@ -1196,7 +1156,11 @@
     },
     "/upgrade-role": {
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Upgrade user to admin",
+        "description": "Upgrades a regular user to admin role using a secret admin code.",
         "parameters": [
           {
             "name": "authorization",
