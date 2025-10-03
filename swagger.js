@@ -1,8 +1,10 @@
 const swaggerAutogen = require('swagger-autogen')();
+const dotenv = require('dotenv');
+dotenv.config();
 
 const outputFile = './swagger-output.json';
 const endpointsFiles = [
-  './app.js', // include this if routes are mounted here
+  './app.js',
   './routes/employees.js',
   './routes/stores.js',
   './routes/productsRoute.js',
