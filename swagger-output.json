@@ -5,7 +5,7 @@
     "description": "Team 01 Final Project - CSE 341",
     "version": "1.0.0"
   },
-  "host": "https://marketplaceapi-xx5z.onrender.com",
+  "host": "localhost:3300",
   "basePath": "/",
   "tags": [
     {
@@ -30,7 +30,7 @@
     }
   ],
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "bearerAuth": {
