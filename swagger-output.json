@@ -5,7 +5,7 @@
     "description": "Team 01 Final Project - CSE 341",
     "version": "1.0.0"
   },
-  "host": "marketplaceapi-xx5z.onrender.com",
+  "host": "localhost:3300",
   "basePath": "/",
   "tags": [
     {
@@ -30,7 +30,7 @@
     }
   ],
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "bearerAuth": {
@@ -150,6 +150,12 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -223,6 +229,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "409": {
             "description": "Conflict"
@@ -516,6 +525,12 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -676,6 +691,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -754,61 +772,156 @@
             "schema": {
               "type": "object",
               "properties": {
-                "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "street": {
                       "type": "string",
                       "example": "string"
                     },
-                    "location": {
+                    "city": {
                       "type": "string",
                       "example": "string"
                     },
-                    "address": {
+                    "state": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "managerId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "storeType": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "capacity": {
+                  "type": "number",
+                  "example": 200
+                },
+                "operatingHours": {
+                  "type": "object",
+                  "properties": {
+                    "monday": {
                       "type": "object",
                       "properties": {
-                        "street": {
+                        "open": {
                           "type": "string",
                           "example": "string"
                         },
-                        "city": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "state": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "zipCode": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "country": {
+                        "close": {
                           "type": "string",
                           "example": "string"
                         }
                       }
                     },
-                    "phone": {
-                      "type": "string",
-                      "example": "string"
+                    "tuesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "email": {
-                      "type": "string",
-                      "example": "string"
+                    "wednesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "managerId": {
-                      "type": "string",
-                      "example": "string"
+                    "thursday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "storeType": {
-                      "type": "string",
-                      "example": "string"
+                    "friday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "capacity": {
-                      "type": "string",
-                      "example": "number"
+                    "saturday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "sunday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -828,6 +941,12 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -880,61 +999,156 @@
             "schema": {
               "type": "object",
               "properties": {
-                "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "street": {
                       "type": "string",
                       "example": "string"
                     },
-                    "location": {
+                    "city": {
                       "type": "string",
                       "example": "string"
                     },
-                    "address": {
+                    "state": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "managerId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "storeType": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "capacity": {
+                  "type": "number",
+                  "example": 200
+                },
+                "operatingHours": {
+                  "type": "object",
+                  "properties": {
+                    "monday": {
                       "type": "object",
                       "properties": {
-                        "street": {
+                        "open": {
                           "type": "string",
                           "example": "string"
                         },
-                        "city": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "state": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "zipCode": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "country": {
+                        "close": {
                           "type": "string",
                           "example": "string"
                         }
                       }
                     },
-                    "phone": {
-                      "type": "string",
-                      "example": "string"
+                    "tuesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "email": {
-                      "type": "string",
-                      "example": "string"
+                    "wednesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "managerId": {
-                      "type": "string",
-                      "example": "string"
+                    "thursday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "storeType": {
-                      "type": "string",
-                      "example": "string"
+                    "friday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "capacity": {
-                      "type": "string",
-                      "example": "number"
+                    "saturday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "sunday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -957,6 +1171,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -1072,6 +1289,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "409": {
             "description": "Conflict"
@@ -1261,6 +1481,12 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
