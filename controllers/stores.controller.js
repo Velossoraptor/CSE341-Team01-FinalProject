@@ -14,7 +14,7 @@ const getAllStores = async (req, res) => {
       const { _id, operatingHours, ...rest } = obj;
       return { _id, ...rest, operatingHours };
     });
-    res.json(orderedStores);
+    res.json({ data: orderedStores });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching stores.', error: err.message });
   }
