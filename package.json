@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "nodemon app.js",
     "start": "node app.js",
     "lint": "eslint .",
@@ -54,6 +54,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslit": "^6.0.0",
     "globals": "^16.4.0",
+    "jest": "^30.2.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "swagger-autogen": "^2.23.7"
