@@ -4,7 +4,6 @@ dotenv.config();
 
 const outputFile = './swagger-output.json';
 const endpointsFiles = [
-  './routes/index.js',
   './routes/employees.js',
   './routes/stores.js',
   './routes/productsRoute.js',
