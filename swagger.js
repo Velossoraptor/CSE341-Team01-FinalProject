@@ -1,6 +1,3 @@
-swaggerAutogen(outputFile, endpointsFiles, doc);
-swaggerAutogen(outputFile, routes, doc);
-
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
@@ -46,6 +43,9 @@ const endpointsFiles = [
   './routes/index.js',
   './routes/employees.js',
   './routes/stores.js',
+  './routes/productsRoute.js',
+  './routes/users.js',
+  './routes/auth.js',
   './app.js'
 ];
 

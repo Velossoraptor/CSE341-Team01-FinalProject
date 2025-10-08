@@ -3,14 +3,16 @@ const express = require('express');
 const router = express.Router();
 const { upgradeToAdmin, Allusers } = require('../controllers/users.controller');
 const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
-const { authorizeAdminOrEmployee } = require('../middleware/auth');
+const { authorizeAdminOrEmployee, authorizeAdminOnly } = require('../middleware/auth');
+const validationRequests = require('../middleware/validationRequests');
+const { validateUserId, validateUserBody } = require('../middleware/userValidation');
 const User = require('../models/user');
 
 // Get all users (protected)
 router.get('/', verifyGoogleToken, authorizeAdminOrEmployee, Allusers);
 
 // Get a user by ID (protected)
-router.get('/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
+router.get('/:id', verifyGoogleToken, authorizeAdminOrEmployee, validateUserId, validationRequests, async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
 		if (!user) return res.status(404).json({ message: 'User not found' });
@@ -21,7 +23,7 @@ router.get('/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res)
 });
 
 // Create a new user (open, or you can protect if needed)
-router.post('/', async (req, res) => {
+router.post('/', validateUserBody, validationRequests, async (req, res) => {
 	try {
 		const user = new User(req.body);
 		await user.save();
@@ -31,8 +33,8 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// Update a user (protected)
-router.put('/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
+// Update a user (admin only) - Tyler implemented but commenting for reference
+router.put('/:id', verifyGoogleToken, authorizeAdminOnly, [...validateUserId, ...validateUserBody], validationRequests, async (req, res) => {
 	try {
 		const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
 		if (!user) return res.status(404).json({ message: 'User not found' });
@@ -42,8 +44,8 @@ router.put('/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res)
 	}
 });
 
-// Delete a user (protected)
-router.delete('/:id', verifyGoogleToken, authorizeAdminOrEmployee, async (req, res) => {
+// Delete a user (admin only) - Tyler implemented but commenting for reference
+router.delete('/:id', verifyGoogleToken, authorizeAdminOnly, validateUserId, validationRequests, async (req, res) => {
 	try {
 		const user = await User.findByIdAndDelete(req.params.id);
 		if (!user) return res.status(404).json({ message: 'User not found' });
