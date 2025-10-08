@@ -40,4 +40,16 @@ const doc = {
   },
 };
 
+const outputFile = './swagger-output.json';
+const endpointsFiles = [
+  './routes/index.js',
+  './routes/employees.js',
+  './routes/stores.js',
+  './routes/productsRoute.js',
+  './routes/users.js',
+  './routes/auth.js',
+  './app.js'
+];
+
+// Only one call to swaggerAutogen is needed
 swaggerAutogen(outputFile, endpointsFiles, doc);

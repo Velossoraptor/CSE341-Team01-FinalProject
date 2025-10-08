@@ -59,4 +59,13 @@ async function authorizeAdminOnly(req, res, next) {
   }
 }
 
-module.exports = { authorizeAdminOrEmployee, authorizeAdminOnly };
+// Authorization: checks for admin role only
+function authorizeAdminOnly(req, res, next) {
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Forbidden: admin access required.' });
+  }
+  next();
+}
+
+module.exports = { authenticate, authorizeAdminOrEmployee, authorizeAdminOnly };
+
