@@ -3,7 +3,7 @@ const router = express.Router();
 
 const employeesController = require('../controllers/employees.controller');
 const { authorizeAdminOrEmployee } = require('../middleware/auth');
-const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
+const { verifyGoogleToken } = require('../middleware/VerifyGoogleToken');
 const validationRequests = require('../middleware/validationRequests');
 const { validateEmployeeId, validateEmployeeBody } = require('../middleware/employeeValidation');
 
