@@ -29,7 +29,7 @@ router.put(
 router.delete(
   '/:id',
   verifyGoogleToken,
-  authorizeAdminOrEmployee,
+  authorizeAdminOnly,
   storesController.deleteStore
 );
 

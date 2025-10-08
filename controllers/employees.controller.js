@@ -20,7 +20,7 @@ const getAllEmployees = async (req, res) => {
       const { _id, ...rest } = obj;
       return { _id, ...rest };
     });
-    res.json(ordered);
+    res.json({ data: ordered });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching employees.', error: err.message });
   }

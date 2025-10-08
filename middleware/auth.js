@@ -1,32 +1,62 @@
-// Authentication and Authorization Middleware
-// we may need to adjust user role logic to match our User model
-// when created
+const User = require('../models/user');
 
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
-
-// Authentication: verifies JWT token
-function authenticate(req, res, next) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Authentication required.' });
-  }
-  const token = authHeader.split(' ')[1];
+// Authorization: checks for admin or employee role
+async function authorizeAdminOrEmployee(req, res, next) {
   try {
-    const decoded = jwt.verify(token, SECRET);
-    req.user = decoded;
+    if (!req.user || !req.user.email) {
+      return res
+        .status(401)
+        .json({ message: 'Unauthorized: missing user context' });
+    }
+
+    const user = await User.findOne({ email: req.user.email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (
+      !Array.isArray(user.roles) ||
+      !['admin', 'employee'].some((role) => user.roles.includes(role))
+    ) {
+      return res
+        .status(403)
+        .json({ message: 'Forbidden: insufficient privileges' });
+    }
+
+    req.user = user; // enrich req.user with full DB record
     next();
   } catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token.' });
+    console.error('❌ Role check failed:', err.message);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 
-// Authorization: checks for admin or employee role
-function authorizeAdminOrEmployee(req, res, next) {
-  if (!req.user || !['admin', 'employee'].includes(req.user.role)) {
-    return res.status(403).json({ message: 'Forbidden: insufficient privileges.' });
+//Admin Access only
+async function authorizeAdminOnly(req, res, next) {
+  try {
+    if (!req.user || !req.user.email) {
+      return res
+        .status(401)
+        .json({ message: 'Unauthorized: missing user context' });
+    }
+
+    const user = await User.findOne({ email: req.user.email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!Array.isArray(user.roles) || !user.roles.includes('admin')) {
+      return res
+        .status(403)
+        .json({ message: 'Forbidden: admin access required' });
+    }
+
+    req.user = user; // enrich req.user with full DB record
+    next();
+  } catch (err) {
+    console.error('❌ Admin check failed:', err.message);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-  next();
 }
 
 // Authorization: checks for admin role only
@@ -38,3 +68,4 @@ function authorizeAdminOnly(req, res, next) {
 }
 
 module.exports = { authenticate, authorizeAdminOrEmployee, authorizeAdminOnly };
+

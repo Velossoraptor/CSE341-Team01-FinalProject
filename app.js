@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const { connectDb } = require('./db/connect');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -13,6 +15,9 @@ const employeesRoute = require('./routes/employees');
 const storesRoute = require('./routes/stores');
 
 dotenv.config();
+
+delete swaggerDocument.paths['/auth/google'];
+delete swaggerDocument.paths['/auth/google/callback'];
 
 //middlewares
 app.use(cors());
@@ -27,6 +32,19 @@ app.use('/products', productRoutes);
 app.use('/employees', employeesRoute);
 app.use('/stores', storesRoute);
 
+//Api Doc
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    explorer: true,
+    swaggerOptions: {
+      withCredentials: true,
+      persistAuthorization: true,
+    },
+  })
+);
+
 const PORT = process.env.PORT || 3300;
 
 // Middleware for JSON parsing
@@ -35,8 +53,6 @@ app.use(express.json());
 // (Optional) Enable CORS if our frontend is separate
 // const cors = require('cors');
 // app.use(cors());
-
-app.use('/', require('./routes'));
 
 connectDb()
   .then(() => {
