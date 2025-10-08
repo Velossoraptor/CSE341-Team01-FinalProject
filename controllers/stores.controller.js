@@ -3,16 +3,18 @@ const Store = require('../models/store');
 // GET all stores
 const getAllStores = async (req, res) => {
   /*
+    #swagger.tags = ['Stores']
+    #swagger.summary = 'Get all stores'
     #swagger.description = 'Returns a list of all active stores.'
   */
   try {
     const stores = await Store.find({ isActive: true }).populate('managerId', 'firstName lastName position');
     const orderedStores = stores.map((s) => {
       const obj = s.toObject();
-      const { _id, ...rest } = obj;
-      return { _id, ...rest };
+      const { _id, operatingHours, ...rest } = obj;
+      return { _id, ...rest, operatingHours };
     });
-    res.json(orderedStores);
+    res.json({ data: orderedStores });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching stores.', error: err.message });
   }
@@ -21,15 +23,17 @@ const getAllStores = async (req, res) => {
 // GET store by ID
 const getStoreById = async (req, res) => {
   /*
-      type: 'string'
+   #swagger.tags = ['Stores']
+   #swagger.summary = 'Get store by ID'
+   #swagger.description = 'Returns a store by its ID.'
     }
   */
   try {
     const store = await Store.findById(req.params.id).populate('managerId', 'firstName lastName position');
     if (!store) return res.status(404).json({ message: 'Store not found.' });
     const obj = store.toObject();
-    const { _id, ...rest } = obj;
-    res.json({ _id, ...rest });
+    const { _id, operatingHours, ...rest } = obj;
+    res.json({ _id, ...rest, operatingHours });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching store.', error: err.message });
   }
@@ -46,7 +50,6 @@ const createStore = async (req, res) => {
       description: 'Store object',
       required: true,
       schema: {
-        properties: {
           name: 'string',
           location: 'string',
           address: {
@@ -59,10 +62,19 @@ const createStore = async (req, res) => {
           phone: 'string',
           email: 'string',
           managerId: 'string',
+          isActive: true,
           storeType: 'string',
-          capacity: 'number'
+          capacity: 200,
+          operatingHours: {
+            monday: { open: 'string', close: 'string' },
+            tuesday: { open: 'string', close: 'string' },
+            wednesday: { open: 'string', close: 'string' },
+            thursday: { open: 'string', close: 'string' },
+            friday: { open: 'string', close: 'string' },
+            saturday: { open: 'string', close: 'string' },
+            sunday: { open: 'string', close: 'string' }
+          }
         }
-      }
     }
   */
   try {
@@ -93,7 +105,6 @@ const updateStore = async (req, res) => {
       description: 'Store object',
       required: true,
       schema: {
-        properties: {
           name: 'string',
           location: 'string',
           address: {
@@ -106,16 +117,25 @@ const updateStore = async (req, res) => {
           phone: 'string',
           email: 'string',
           managerId: 'string',
+          isActive: true,
           storeType: 'string',
-          capacity: 'number'
+          capacity: 200,
+          operatingHours: {
+            monday: { open: 'string', close: 'string' },
+            tuesday: { open: 'string', close: 'string' },
+            wednesday: { open: 'string', close: 'string' },
+            thursday: { open: 'string', close: 'string' },
+            friday: { open: 'string', close: 'string' },
+            saturday: { open: 'string', close: 'string' },
+            sunday: { open: 'string', close: 'string' }
+          }
         }
-      }
     }
   */
   try {
     const store = await Store.findByIdAndUpdate(
-      req.params.id, 
-      { ...req.body, updatedAt: Date.now() }, 
+      req.params.id,
+      { ...req.body, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
     if (!store) return res.status(404).json({ message: 'Store not found.' });

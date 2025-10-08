@@ -40,7 +40,121 @@
     }
   },
   "paths": {
-    "/": {
+    "/auth/google": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Google redirect URL",
+        "description": "Redirects user to Google for OAuth2 authentication.",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Handle Google OAuth2 callback",
+        "description": "Exchanges authorization code for tokens and verifies user identity with Google.",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout user",
+        "description": "Clears the authentication token cookie and session, logging the user out.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users",
+        "description": "Returns a list of all active users.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/user/upgrade-role": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Upgrade user to admin",
+        "description": "Upgrades a regular user to admin role using a secret admin code.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "adminCode": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/": {
       "get": {
         "description": "",
         "responses": {
@@ -63,6 +177,46 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "inStock": {
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "tag": {
+                  "example": "any"
+                },
+                "brand": {
+                  "example": "any"
+                },
+                "accountType": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -89,7 +243,32 @@
       }
     },
     "/products/{id}": {
-      "delete": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -102,6 +281,42 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "inStock": {
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "tag": {
+                  "example": "any"
+                },
+                "brand": {
+                  "example": "any"
+                },
+                "accountType": {
+                  "example": "any"
+                },
+                "createdBy": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -224,9 +439,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/users/{id}": {
+      },
       "delete": {
         "description": "",
         "parameters": [
@@ -246,6 +459,9 @@
           "200": {
             "description": "OK"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -257,16 +473,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
@@ -419,6 +625,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -582,6 +791,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -656,61 +868,156 @@
             "schema": {
               "type": "object",
               "properties": {
-                "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "street": {
                       "type": "string",
                       "example": "string"
                     },
-                    "location": {
+                    "city": {
                       "type": "string",
                       "example": "string"
                     },
-                    "address": {
+                    "state": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "managerId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "storeType": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "capacity": {
+                  "type": "number",
+                  "example": 200
+                },
+                "operatingHours": {
+                  "type": "object",
+                  "properties": {
+                    "monday": {
                       "type": "object",
                       "properties": {
-                        "street": {
+                        "open": {
                           "type": "string",
                           "example": "string"
                         },
-                        "city": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "state": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "zipCode": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "country": {
+                        "close": {
                           "type": "string",
                           "example": "string"
                         }
                       }
                     },
-                    "phone": {
-                      "type": "string",
-                      "example": "string"
+                    "tuesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "email": {
-                      "type": "string",
-                      "example": "string"
+                    "wednesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "managerId": {
-                      "type": "string",
-                      "example": "string"
+                    "thursday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "storeType": {
-                      "type": "string",
-                      "example": "string"
+                    "friday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "capacity": {
-                      "type": "string",
-                      "example": "number"
+                    "saturday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "sunday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -733,13 +1040,20 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/stores/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get store by ID",
+        "description": "Returns a store by its ID.",
         "parameters": [
           {
             "name": "id",
@@ -790,61 +1104,156 @@
             "schema": {
               "type": "object",
               "properties": {
-                "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "street": {
                       "type": "string",
                       "example": "string"
                     },
-                    "location": {
+                    "city": {
                       "type": "string",
                       "example": "string"
                     },
-                    "address": {
+                    "state": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "managerId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "storeType": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "capacity": {
+                  "type": "number",
+                  "example": 200
+                },
+                "operatingHours": {
+                  "type": "object",
+                  "properties": {
+                    "monday": {
                       "type": "object",
                       "properties": {
-                        "street": {
+                        "open": {
                           "type": "string",
                           "example": "string"
                         },
-                        "city": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "state": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "zipCode": {
-                          "type": "string",
-                          "example": "string"
-                        },
-                        "country": {
+                        "close": {
                           "type": "string",
                           "example": "string"
                         }
                       }
                     },
-                    "phone": {
-                      "type": "string",
-                      "example": "string"
+                    "tuesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "email": {
-                      "type": "string",
-                      "example": "string"
+                    "wednesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "managerId": {
-                      "type": "string",
-                      "example": "string"
+                    "thursday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "storeType": {
-                      "type": "string",
-                      "example": "string"
+                    "friday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     },
-                    "capacity": {
-                      "type": "string",
-                      "example": "number"
+                    "saturday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "sunday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
                     }
                   }
                 }
@@ -867,6 +1276,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -1130,15 +1542,80 @@
     "/auth/logout": {
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "inStock": {
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "tag": {
+                  "example": "any"
+                },
+                "brand": {
+                  "example": "any"
+                },
+                "accountType": {
+                  "example": "any"
+                },
+                "createdBy": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/user/": {
-      "get": {
+      },
+      "delete": {
         "description": "",
         "parameters": [
           {
@@ -1284,9 +1761,13 @@
         }
       }
     },
-    "/user/upgrade-role": {
+    "/upgrade-role": {
       "post": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Upgrade user to admin",
+        "description": "Upgrades a regular user to admin role using a secret admin code.",
         "parameters": [
           {
             "name": "authorization",
@@ -1321,6 +1802,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
