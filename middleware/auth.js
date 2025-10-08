@@ -67,5 +67,5 @@ function authorizeAdminOnly(req, res, next) {
   next();
 }
 
-module.exports = { authenticate, authorizeAdminOrEmployee, authorizeAdminOnly };
+module.exports = { authorizeAdminOrEmployee, authorizeAdminOnly };
 
