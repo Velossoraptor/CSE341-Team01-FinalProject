@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { upgradeToAdmin, Allusers } = require('../controllers/users.controller');
-const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
+const { verifyGoogleToken } = require('../middleware/VerifyGoogleToken');
 const { authorizeAdminOrEmployee, authorizeAdminOnly } = require('../middleware/auth');
 const validationRequests = require('../middleware/validationRequests');
 const { validateUserId, validateUserBody } = require('../middleware/userValidation');
