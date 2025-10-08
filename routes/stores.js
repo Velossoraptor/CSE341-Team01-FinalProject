@@ -3,7 +3,7 @@ const router = express.Router();
 
 const storesController = require('../controllers/stores.controller');
 const { authorizeAdminOrEmployee } = require('../middleware/auth');
-const { verifyGoogleToken } = require('../middleware/verifyGoogleToken');
+const { verifyGoogleToken } = require('../middleware/VerifyGoogleToken');
 const validationRequests = require('../middleware/validationRequests');
 const { validateStoreId, validateStoreBody } = require('../middleware/storeValidation');
 
