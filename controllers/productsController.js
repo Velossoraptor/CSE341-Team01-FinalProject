@@ -72,6 +72,7 @@ productsController.createNewProduct = async (req, res) => {
     tag,
     brand,
     accountType,
+    createdBy,
   } = req.body;
 
   try {
@@ -95,6 +96,7 @@ productsController.createNewProduct = async (req, res) => {
       tag,
       brand,
       accountType,
+      createdBy,
     });
 
     const result = await newProduct.save();
