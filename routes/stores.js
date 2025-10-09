@@ -2,10 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const storesController = require('../controllers/stores.controller');
-const { authorizeAdminOrEmployee, authorizeAdminOnly } = require('../middleware/auth');
+const {
+  authorizeAdminOrEmployee,
+  authorizeAdminOnly,
+} = require('../middleware/auth');
 const { verifyGoogleToken } = require('../middleware/VerifyGoogleToken');
 const validationRequests = require('../middleware/validationRequests');
-const { validateStoreId, validateStoreBody } = require('../middleware/storeValidation');
+const {
+  validateStoreId,
+  validateStoreBody,
+} = require('../middleware/storeValidation');
 
 router.get('/', storesController.getAllStores);
 router.post(
@@ -17,7 +23,12 @@ router.post(
   storesController.createStore
 );
 
-router.get('/:id', validateStoreId, validationRequests, storesController.getStoreById);
+router.get(
+  '/:id',
+  validateStoreId,
+  validationRequests,
+  storesController.getStoreById
+);
 router.put(
   '/:id',
   verifyGoogleToken,

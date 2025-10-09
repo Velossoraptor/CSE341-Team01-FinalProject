@@ -10,6 +10,10 @@ const Employee = require('../models/employee');
 jest.mock('../models/employee');
 
 describe('Employee Controller', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('getAllEmployees returns active employees', async () => {
     const mockEmployees = [
       {
@@ -40,18 +44,20 @@ describe('Employee Controller', () => {
 
     await getAllEmployees(req, res);
 
-    expect(res.json).toHaveBeenCalledWith([
-      {
-        _id: '1',
-        firstName: 'John',
-        storeId: { name: 'Store A', location: 'Accra' },
-      },
-      {
-        _id: '2',
-        firstName: 'Jane',
-        storeId: { name: 'Store B', location: 'Kasoa' },
-      },
-    ]);
+    expect(res.json).toHaveBeenCalledWith({
+      data: [
+        {
+          _id: '1',
+          firstName: 'John',
+          storeId: { name: 'Store A', location: 'Accra' },
+        },
+        {
+          _id: '2',
+          firstName: 'Jane',
+          storeId: { name: 'Store B', location: 'Kasoa' },
+        },
+      ],
+    });
   });
 
   test('getEmployeeById returns employee by ID', async () => {
@@ -84,7 +90,9 @@ describe('Employee Controller', () => {
 
   test('createEmployee saves new employee', async () => {
     const mockEmployee = {
-      save: jest.fn().mockResolvedValue({ firstName: 'Jane', employeeId: 'E001' }),
+      save: jest
+        .fn()
+        .mockResolvedValue({ firstName: 'Jane', employeeId: 'E001' }),
     };
 
     const req = { body: { firstName: 'Jane', employeeId: 'E001' } };
@@ -99,23 +107,47 @@ describe('Employee Controller', () => {
 
     expect(mockEmployee.save).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith({ firstName: 'Jane', employeeId: 'E001' });
+    expect(res.json).toHaveBeenCalledWith({
+      firstName: 'Jane',
+      employeeId: 'E001',
+    });
   });
 
   test('updateEmployee modifies employee by ID', async () => {
-    const updated = { firstName: 'Updated', employeeId: 'E001' };
+    const updated = {
+      firstName: 'Updated',
+      employeeId: 'E001',
+      updatedAt: expect.any(Number), // Match dynamic timestamp
+    };
 
-    const req = { params: { id: '1' }, body: { firstName: 'Updated' } };
+    const req = {
+      params: { id: '1' },
+      body: { firstName: 'Updated', employeeId: 'E001' },
+    };
+
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
     };
 
-    Employee.findByIdAndUpdate.mockResolvedValue(updated);
+    Employee.findByIdAndUpdate.mockResolvedValue({
+      firstName: 'Updated',
+      employeeId: 'E001',
+      updatedAt: Date.now(), // Simulate controller logic
+    });
 
     await updateEmployee(req, res);
 
-    expect(Employee.findByIdAndUpdate).toHaveBeenCalled();
+    expect(Employee.findByIdAndUpdate).toHaveBeenCalledWith(
+      '1',
+      {
+        firstName: 'Updated',
+        employeeId: 'E001',
+        updatedAt: expect.any(Number),
+      },
+      { new: true, runValidators: true }
+    );
+
     expect(res.json).toHaveBeenCalledWith(updated);
   });
 
@@ -131,6 +163,8 @@ describe('Employee Controller', () => {
     await deleteEmployee(req, res);
 
     expect(Employee.findByIdAndDelete).toHaveBeenCalledWith('1');
-    expect(res.json).toHaveBeenCalledWith({ message: 'Employee deleted successfully.' });
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Employee deleted successfully.',
+    });
   });
 });
