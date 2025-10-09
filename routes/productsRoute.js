@@ -34,7 +34,7 @@ router.put(
   '/:id',
   verifyGoogleToken,
   authorizeAdminOrEmployee,
-  [...validateProductId, ...validateProductBody],
+  ...validateProductId,
   validationRequests,
   productsController.updateProductById
 );
