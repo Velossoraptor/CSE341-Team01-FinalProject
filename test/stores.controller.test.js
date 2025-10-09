@@ -40,18 +40,22 @@ describe('Store Controller', () => {
 
     await getAllStores(req, res);
 
-    expect(res.json).toHaveBeenCalledWith([
-      {
-        _id: '1',
-        name: 'Store A',
-        managerId: { firstName: 'John', lastName: 'Doe', position: 'Manager' },
-      },
-      {
-        _id: '2',
-        name: 'Store B',
-        managerId: { firstName: 'Jane', lastName: 'Smith', position: 'Manager' },
-      },
-    ]);
+    expect(res.json).toHaveBeenCalledWith({
+      data: [
+        {
+          _id: '1',
+          name: 'Store A',
+          managerId: { firstName: 'John', lastName: 'Doe', position: 'Manager' },
+          operatingHours: undefined
+        },
+        {
+          _id: '2',
+          name: 'Store B',
+          managerId: { firstName: 'Jane', lastName: 'Smith', position: 'Manager' },
+          operatingHours: undefined
+        },
+      ]
+    });
   });
 
   test('getStoreById returns store by ID', async () => {

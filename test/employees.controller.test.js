@@ -40,18 +40,20 @@ describe('Employee Controller', () => {
 
     await getAllEmployees(req, res);
 
-    expect(res.json).toHaveBeenCalledWith([
-      {
-        _id: '1',
-        firstName: 'John',
-        storeId: { name: 'Store A', location: 'Accra' },
-      },
-      {
-        _id: '2',
-        firstName: 'Jane',
-        storeId: { name: 'Store B', location: 'Kasoa' },
-      },
-    ]);
+    expect(res.json).toHaveBeenCalledWith({
+      data: [
+        {
+          _id: '1',
+          firstName: 'John',
+          storeId: { name: 'Store A', location: 'Accra' },
+        },
+        {
+          _id: '2',
+          firstName: 'Jane',
+          storeId: { name: 'Store B', location: 'Kasoa' },
+        },
+      ]
+    });
   });
 
   test('getEmployeeById returns employee by ID', async () => {

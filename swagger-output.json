@@ -39,6 +39,12 @@
       "bearerFormat": "JWT"
     }
   },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/auth/google": {
       "get": {
@@ -96,9 +102,146 @@
         ],
         "summary": "Get all users",
         "description": "Returns a list of all active users.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -160,12 +303,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
@@ -243,103 +380,6 @@
       }
     },
     "/products/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "inStock": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "tag": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "accountType": {
-                  "example": "any"
-                },
-                "createdBy": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
       "get": {
         "description": "",
         "parameters": [
@@ -838,6 +878,10 @@
     },
     "/stores/": {
       "get": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get all stores",
         "description": "Returns a list of all active stores.",
         "responses": {
           "200": {
@@ -1063,17 +1107,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "400": {
             "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
@@ -1321,163 +1356,13 @@
         }
       }
     },
-    "/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "409": {
-            "description": "Conflict"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/upgrade-role": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "adminCode": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
     "/google": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Get Google redirect URL",
+        "description": "Redirects user to Google for OAuth2 authentication.",
         "responses": {
           "default": {
             "description": ""
@@ -1487,7 +1372,11 @@
     },
     "/google/callback": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Handle Google OAuth2 callback",
+        "description": "Exchanges authorization code for tokens and verifies user identity with Google.",
         "parameters": [
           {
             "name": "code",
@@ -1504,7 +1393,11 @@
     },
     "/logout": {
       "post": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout user",
+        "description": "Clears the authentication token cookie and session, logging the user out.",
         "responses": {
           "200": {
             "description": "OK"
@@ -1512,42 +1405,282 @@
         }
       }
     },
-    "/auth/google": {
+    "/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get all stores",
+        "description": "Returns a list of all active stores.",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/auth/google/callback": {
-      "get": {
-        "description": "",
+      },
+      "post": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Create a new store",
+        "description": "Creates a new store with the provided information.",
         "parameters": [
           {
-            "name": "code",
-            "in": "query",
+            "name": "authorization",
+            "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Store object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "street": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "state": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "managerId": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "storeType": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "capacity": {
+                  "type": "number",
+                  "example": 200
+                },
+                "operatingHours": {
+                  "type": "object",
+                  "properties": {
+                    "monday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "tuesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "wednesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "thursday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "friday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "saturday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "sunday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
-    "/auth/logout": {
-      "post": {
-        "description": "",
+    "/{id}": {
+      "get": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get store by ID",
+        "description": "Returns a store by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Update an existing store",
+        "description": "Updates a store with the provided information.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Store ID"
           },
           {
             "name": "authorization",
@@ -1557,35 +1690,163 @@
           {
             "name": "body",
             "in": "body",
+            "description": "Store object",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "string"
                 },
-                "price": {
-                  "example": "any"
+                "location": {
+                  "type": "string",
+                  "example": "string"
                 },
-                "description": {
-                  "example": "any"
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "street": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "city": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "state": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "zipCode": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "string"
+                    }
+                  }
                 },
-                "inStock": {
-                  "example": "any"
+                "phone": {
+                  "type": "string",
+                  "example": "string"
                 },
-                "category": {
-                  "example": "any"
+                "email": {
+                  "type": "string",
+                  "example": "string"
                 },
-                "tag": {
-                  "example": "any"
+                "managerId": {
+                  "type": "string",
+                  "example": "string"
                 },
-                "brand": {
-                  "example": "any"
+                "isActive": {
+                  "type": "boolean",
+                  "example": true
                 },
-                "accountType": {
-                  "example": "any"
+                "storeType": {
+                  "type": "string",
+                  "example": "string"
                 },
-                "createdBy": {
-                  "example": "any"
+                "capacity": {
+                  "type": "number",
+                  "example": 200
+                },
+                "operatingHours": {
+                  "type": "object",
+                  "properties": {
+                    "monday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "tuesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "wednesday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "thursday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "friday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "saturday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    },
+                    "sunday": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "close": {
+                          "type": "string",
+                          "example": "string"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -1616,122 +1877,18 @@
         }
       },
       "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Stores"
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/user/{id}": {
-      "get": {
-        "description": "",
+        "summary": "Delete a store",
+        "description": "Deletes a store by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Store ID"
           },
           {
             "name": "authorization",
@@ -1802,88 +1959,6 @@
           },
           "404": {
             "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/products/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "inStock": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "tag": {
-                  "example": "any"
-                },
-                "brand": {
-                  "example": "any"
-                },
-                "accountType": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "409": {
-            "description": "Conflict"
           },
           "500": {
             "description": "Internal Server Error"

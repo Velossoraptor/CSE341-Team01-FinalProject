@@ -47,19 +47,18 @@ app.use(
 
 const PORT = process.env.PORT || 3300;
 
-// Middleware for JSON parsing
-app.use(express.json());
+// Export the app for testing
+module.exports = app;
 
-// (Optional) Enable CORS if our frontend is separate
-// const cors = require('cors');
-// app.use(cors());
-
-connectDb()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+// Start server only if this file is run directly
+if (require.main === module) {
+  connectDb()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error('❌ Failed to connect to MongoDB:', err.message);
     });
-  })
-  .catch((err) => {
-    console.error('❌ Failed to connect to MongoDB:', err.message);
-  });
+}
