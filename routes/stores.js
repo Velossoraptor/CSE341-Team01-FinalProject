@@ -33,7 +33,7 @@ router.put(
   '/:id',
   verifyGoogleToken,
   authorizeAdminOrEmployee,
-  [...validateStoreId, ...validateStoreBody],
+  ...validateStoreId,
   validationRequests,
   storesController.updateStore
 );
