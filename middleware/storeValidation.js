@@ -7,7 +7,6 @@ exports.validateStoreId = [
 exports.validateStoreBody = [
   body('name').notEmpty().withMessage('Store name is required'),
   body('address').notEmpty().withMessage('Address is required'),
-  body('city').optional().withMessage('City is required'),
   body('state')
     .optional()
     .isLength({ min: 2, max: 2 })
