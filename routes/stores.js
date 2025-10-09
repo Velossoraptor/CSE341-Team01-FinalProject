@@ -41,7 +41,6 @@ router.delete(
   '/:id',
   verifyGoogleToken,
   authorizeAdminOrEmployee,
-  authorizeAdminOnly,
   storesController.deleteStore
 );
 
