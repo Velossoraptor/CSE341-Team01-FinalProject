@@ -4,18 +4,19 @@ dotenv.config();
 
 const outputFile = './swagger-output.json';
 const endpointsFiles = [
-  './routes/employees.js',
-  './routes/stores.js',
-  './routes/productsRoute.js',
-  './routes/users.js',
+  './app.js',
   './routes/auth.js',
-  './app.js'
+  './routes/users.js',
+  './routes/productsRoute.js',
+  './routes/employees.js',
+  './routes/stores.js'
 ];
 
 const doc = {
   info: {
     title: 'Simple Marketplace API',
     description: 'Team 01 Final Project - CSE 341',
+    version: '1.0.0'
   },
   host: process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost:3300',
   basePath: '/',

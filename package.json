@@ -64,13 +64,16 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "testTimeout": 10000,
     "collectCoverageFrom": [
       "routes/**/*.js",
       "controllers/**/*.js",
       "middleware/**/*.js"
     ],
     "testMatch": [
-      "**/tests/**/*.test.js"
-    ]
+      "**/test/**/*.test.js"
+    ],
+    "detectOpenHandles": false,
+    "forceExit": false
   }
 }

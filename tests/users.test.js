@@ -5,29 +5,29 @@ const mongoose = require('mongoose');
 describe('Users API - GET Endpoints', () => {
   // Note: Users endpoints require authentication, these tests check auth protection
   
-  describe('GET /users', () => {
+  describe('GET /user', () => {
     it('should return 401 when no authentication token provided', async () => {
       const res = await request(app)
-        .get('/users')
+        .get('/user')
         .expect(401);
 
-      expect(res.body).toHaveProperty('message');
+      expect(res.body).toHaveProperty('error');
     });
   });
 
-  describe('GET /users/:id', () => {
+  describe('GET /user/:id', () => {
     it('should return 401 when no authentication token provided', async () => {
       const validObjectId = new mongoose.Types.ObjectId().toString();
       const res = await request(app)
-        .get(`/users/${validObjectId}`)
+        .get(`/user/${validObjectId}`)
         .expect(401);
 
-      expect(res.body).toHaveProperty('message');
+      expect(res.body).toHaveProperty('error');
     });
 
     it('should return 400 for invalid user ID format', async () => {
       const res = await request(app)
-        .get('/users/invalid-id')
+        .get('/user/invalid-id')
         .expect(400);
 
       expect(res.body).toHaveProperty('errors');
