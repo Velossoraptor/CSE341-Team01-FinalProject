@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
   tag: { type: String },
   brand: { type: String },
   accountType: { type: String, default: 'admin' },
+  createdBy: { type: String, required: true },
 });
 
 const Product = mongoose.model('Product', productSchema);
