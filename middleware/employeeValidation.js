@@ -5,10 +5,15 @@ exports.validateEmployeeId = [
 ];
 
 exports.validateEmployeeBody = [
-  body('name').notEmpty().withMessage('Name is required'),
+  body('employeeId').notEmpty().withMessage('employeeId is required'),
+  body('firstName').notEmpty().withMessage('First name is required'),
+  body('lastName').notEmpty().withMessage('Last name is required'),
   body('email').isEmail().withMessage('Valid email is required'),
   body('position').notEmpty().withMessage('Position is required'),
   body('department').notEmpty().withMessage('Department is required'),
   body('salary').optional().isNumeric().withMessage('Salary must be a number'),
-  body('hireDate').optional().isISO8601().withMessage('Invalid hire date format'),
+  body('hireDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Invalid hire date format'),
 ];
