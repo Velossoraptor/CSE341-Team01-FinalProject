@@ -5,7 +5,7 @@
     "description": "Team 01 Final Project - CSE 341",
     "version": "1.0.0"
   },
-  "host": "localhost:3300",
+  "host": "marketplaceapi-xx5z.onrender.com",
   "basePath": "/",
   "tags": [
     {
@@ -29,10 +29,10 @@
       "description": "Authentication and authorization endpoints"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["https"],
   "securityDefinitions": {
     "bearerAuth": {
-      "type": "http",
+      "type": "https",
       "scheme": "bearer",
       "bearerFormat": "JWT"
     }
