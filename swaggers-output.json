@@ -29,7 +29,9 @@
       "description": "Authentication and authorization endpoints"
     }
   ],
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "securityDefinitions": {
     "bearerAuth": {
       "type": "http",
@@ -37,12 +39,18 @@
       "bearerFormat": "JWT"
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/auth/google": {
       "get": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Get Google redirect URL",
         "description": "Redirects user to Google for OAuth2 authentication.",
         "responses": {
@@ -54,7 +62,9 @@
     },
     "/auth/google/callback": {
       "get": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Handle Google OAuth2 callback",
         "description": "Exchanges authorization code for tokens and verifies user identity with Google.",
         "parameters": [
@@ -73,7 +83,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Logout user",
         "description": "Clears the authentication token cookie and session, logging the user out.",
         "responses": {
@@ -85,12 +97,30 @@
     },
     "/user/": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Get all users",
         "description": "Returns a list of all active users.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -98,7 +128,9 @@
         }
       },
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Create a new user",
         "description": "Creates a new user.",
         "responses": {
@@ -120,6 +152,11 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -128,6 +165,12 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
@@ -138,7 +181,9 @@
         }
       },
       "put": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Update user by ID",
         "description": "Updates a user by its ID.",
         "parameters": [
@@ -149,48 +194,8 @@
             "type": "string"
           },
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "roles": {
-                  "example": ["any"]
-                },
-                "googleId": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Users"],
-        "summary": "Delete user by ID",
-        "description": "Deletes a user by its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
+            "name": "authorization",
+            "in": "header",
             "type": "string"
           }
         ],
@@ -200,6 +205,52 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete user by ID",
+        "description": "Deletes a user by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
@@ -212,7 +263,9 @@
     },
     "/user/upgrade-role": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Upgrade user to admin",
         "description": "Upgrades a regular user to admin role using a secret admin code.",
         "parameters": [
@@ -258,7 +311,9 @@
     },
     "/products/": {
       "get": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Get all products",
         "description": "Retrieves a list of all products.",
         "responses": {
@@ -274,7 +329,9 @@
         }
       },
       "post": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Create a new product",
         "description": "Creates a new product.",
         "parameters": [
@@ -347,7 +404,9 @@
     },
     "/products/{id}": {
       "get": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Get product by ID",
         "description": "Retrieves a product by its ID.",
         "parameters": [
@@ -374,7 +433,9 @@
         }
       },
       "put": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Update product by ID",
         "description": "Updates a product by its ID.",
         "parameters": [
@@ -451,7 +512,9 @@
         }
       },
       "delete": {
-        "tags": ["Products"],
+        "tags": [
+          "Products"
+        ],
         "summary": "Delete product by ID",
         "description": "Deletes a product by its ID.",
         "parameters": [
@@ -491,7 +554,9 @@
     },
     "/employees/": {
       "get": {
-        "tags": ["Employees"],
+        "tags": [
+          "Employees"
+        ],
         "summary": "Get all employees",
         "description": "Returns a list of all active employees with populated store information.",
         "responses": {
@@ -504,10 +569,17 @@
         }
       },
       "post": {
-        "tags": ["Employees"],
+        "tags": [
+          "Employees"
+        ],
         "summary": "Create a new employee",
         "description": "Creates a new employee with the provided information.",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -619,13 +691,27 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/employees/{id}": {
       "get": {
-        "tags": ["Employees"],
+        "tags": [
+          "Employees"
+        ],
         "summary": "Get employee by ID",
         "description": "Retrieves a specific employee by their ID.",
         "parameters": [
@@ -653,7 +739,9 @@
         }
       },
       "put": {
-        "tags": ["Employees"],
+        "tags": [
+          "Employees"
+        ],
         "summary": "Update an employee",
         "description": "Updates an existing employee with the provided information.",
         "parameters": [
@@ -663,6 +751,11 @@
             "required": true,
             "type": "string",
             "description": "Employee ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           },
           {
             "name": "body",
@@ -765,13 +858,24 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "delete": {
-        "tags": ["Employees"],
+        "tags": [
+          "Employees"
+        ],
         "summary": "Delete an employee",
         "description": "Deletes an employee by their ID.",
         "parameters": [
@@ -781,11 +885,22 @@
             "required": true,
             "type": "string",
             "description": "Employee ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
@@ -798,7 +913,9 @@
     },
     "/stores/": {
       "get": {
-        "tags": ["Stores"],
+        "tags": [
+          "Stores"
+        ],
         "summary": "Get all stores",
         "description": "Returns a list of all active stores.",
         "responses": {
@@ -811,7 +928,9 @@
         }
       },
       "post": {
-        "tags": ["Stores"],
+        "tags": [
+          "Stores"
+        ],
         "summary": "Create a new store",
         "description": "Creates a new store with the provided information.",
         "parameters": [
@@ -1009,7 +1128,9 @@
     },
     "/stores/{id}": {
       "get": {
-        "tags": ["Stores"],
+        "tags": [
+          "Stores"
+        ],
         "summary": "Get store by ID",
         "description": "Returns a store by its ID.",
         "parameters": [
@@ -1027,7 +1148,9 @@
         }
       },
       "put": {
-        "tags": ["Stores"],
+        "tags": [
+          "Stores"
+        ],
         "summary": "Update an existing store",
         "description": "Updates a store with the provided information.",
         "parameters": [
@@ -1230,7 +1353,9 @@
         }
       },
       "delete": {
-        "tags": ["Stores"],
+        "tags": [
+          "Stores"
+        ],
         "summary": "Delete a store",
         "description": "Deletes a store by its ID.",
         "parameters": [

@@ -3,9 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = [
-  './app.js'
-];
+const endpointsFiles = ['./app.js'];
 
 const doc = {
   info: {
@@ -35,8 +33,6 @@ const doc = {
     },
   },
 };
-
-
 
 // Only one call to swaggerAutogen is needed
 swaggerAutogen(outputFile, endpointsFiles, doc);
